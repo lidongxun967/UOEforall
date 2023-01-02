@@ -23,8 +23,11 @@ def sz():
 
 def click_menu():
     with open('run.json', 'r') as run:
-        pidz=json.loads(run.read())['PID']
+        jot=json.loads(run.read())
+        pidz=jot['PID']
+        spidz=jot['SPID']
     os.system(f"taskkill /PID {pidz} /f")
+    os.system(f"taskkill /PID {spidz} /f")
     os.system("start python/pythonw.exe main.pyw")
     icon.notify("已刷新", "UOE")
 

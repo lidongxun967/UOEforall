@@ -27,6 +27,17 @@ c = wmi.WMI ()
 watcher = c.watch_for(raw_wql=raw_wql)
 while 1:
     usb = watcher ()
-    os.system(f"start {runz[wmicu(usb)['DeviceID']]}")
-    print(runz[wmicu(usb)['DeviceID']])
+    with open('run.json', 'r') as run:
+        runz=json.loads(run.read())
+
+    with open('run.json', 'w+') as run:
+        runz['PID']=os.getpid()
+        js = json.dumps(runz, sort_keys=True, indent=4, separators=(',', ':'))
+        run.write(js)
+    q = wmicu(usb)
+    try:
+        os.system(f"start {runz[q['DeviceID']]}")
+        print("qqm")
+    except  :
+        pass
     
